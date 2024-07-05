@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  front:
+    container_name: front
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    volumes:
+      - ./front:/var/www/html
+    ports:
+      - "8100:80"
+    depends_on:
+      - back
+
+  back:
+    container_name: back
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    volumes:
+      - ./back:/usr/src/app
+    ports:
+      - "8200:8000"
+    environment:
+      - NODE_ENV=development
+    command: npm start
+
+volumes:
+  front:
+  back:
